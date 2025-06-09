@@ -1,6 +1,12 @@
+import { Button } from '@/components/ui/button';
+import { auth } from '@clerk/nextjs/server';
 import Image from 'next/image';
+import Link from 'next/link';
 
-export default function Home() {
+export default async function Home() {
+  const { userId } = await auth();
+
+  console.log(userId);
   return (
     <div className='flex flex-col items-center justify-center h-screen p-6'>
       <div className='flex-1 flex flex-col items-center justify-center'>
@@ -19,8 +25,36 @@ export default function Home() {
             reprehenderit sequi veniam, sit quos deleniti dolorem! Doloribus,
             iure.
           </p>
+
+          <div className='flex gap-4'>
+            {userId ? (
+              <></>
+            ) : (
+              <>
+                <Link href='/sign-up'>
+                  <Button className='md:text-base font-light'>
+                    New Patient
+                  </Button>
+                </Link>
+
+                <Link href='/sign-in'>
+                  <Button
+                    variant='outline'
+                    className='md:text-base underline hover:text-blue-600'
+                  >
+                    Login to account
+                  </Button>
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
+      <footer className='mt-8'>
+        <p className='text-center text-sm'>
+          &copy; 2025 Hospital Management System. All right reserved.
+        </p>
+      </footer>
     </div>
   );
 }
