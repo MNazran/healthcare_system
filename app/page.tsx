@@ -30,6 +30,9 @@ export default async function Home() {
           <div className='flex gap-4'>
             {userId ? (
               <>
+                <Link href={'/dashboard'}>
+                  <Button>View Dashboard</Button>
+                </Link>
                 <UserButton />
               </>
             ) : (
