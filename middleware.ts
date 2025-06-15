@@ -1,6 +1,29 @@
-import { clerkMiddleware } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { routeMatchers } from './lib/routes';
 
-export default clerkMiddleware();
+const checkRoleAndRedirect = (
+  req: NextRequest,
+  role: string | undefined,
+  allowedRole: keyof typeof routeMatchers
+): NextResponse | undefined => {
+  if (routeMatchers[allowedRole](req) && role !== allowedRole) {
+    const url = new URL('/', req.url);
+    console.log('Unauthorized access, redirecting to:', url);
+    return NextResponse.redirect(url);
+  }
+};
+
+// const matchers = Object.keys(routeAccess).map((route) => ({
+//   matcher: createRouteMatcher([route]),
+//   allowedRoles: routeAccess[route],
+// }));
+
+export default clerkMiddleware(async (auth, request) => {
+  const { userId, sessionClaims } = await auth();
+
+  // role checks
+});
 
 export const config = {
   matcher: [
