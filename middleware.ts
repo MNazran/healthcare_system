@@ -14,15 +14,17 @@ const checkRoleAndRedirect = (
   }
 };
 
-// const matchers = Object.keys(routeAccess).map((route) => ({
-//   matcher: createRouteMatcher([route]),
-//   allowedRoles: routeAccess[route],
-// }));
-
-export default clerkMiddleware(async (auth, request) => {
+export default clerkMiddleware(async (auth, req) => {
   const { userId, sessionClaims } = await auth();
 
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
+
   // role checks
+  const response =
+    checkRoleAndRedirect(req, role, 'admin') ||
+    checkRoleAndRedirect(req, role, 'doctor');
+
+  if (response) return response;
 });
 
 export const config = {
