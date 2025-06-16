@@ -20,11 +20,11 @@ export default clerkMiddleware(async (auth, req) => {
   const role = (sessionClaims?.metadata as { role?: string })?.role;
 
   // role checks
-  const response =
-    checkRoleAndRedirect(req, role, 'admin') ||
-    checkRoleAndRedirect(req, role, 'doctor');
+  // const response =
+  //   checkRoleAndRedirect(req, role, 'admin') ||
+  //   checkRoleAndRedirect(req, role, 'doctor');
 
-  if (response) return response;
+  // if (response) return response;
 });
 
 export const config = {
