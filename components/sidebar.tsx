@@ -26,7 +26,7 @@ const ACCESS_LEVELS_ALL = [
   'patient',
 ];
 
-const SidebarIcon = ({ Icon }: { Icon: LucideIcon }) => {
+const SidebarIcon = ({ icon: Icon }: { icon: LucideIcon }) => {
   return <Icon className='size-6 lg:size-5' />;
 };
 export const Sidebar = async () => {
@@ -43,7 +43,7 @@ export const Sidebar = async () => {
           icon: LayoutDashboard,
         },
         {
-          name: 'Profiel',
+          name: 'Profile',
           href: '/patient/self',
           access: ['patient'],
           icon: User,
@@ -180,11 +180,18 @@ export const Sidebar = async () => {
               </span>
 
               {el.links.map((link) => {
-                return (
-                  <Link href={link.href}>
-                    <span>{link.name}</span>
-                  </Link>
-                );
+                if (link.access.includes(role.toLowerCase())) {
+                  return (
+                    <Link
+                      href={link.href}
+                      className='flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-blue-600/10'
+                      key={link.name}
+                    >
+                      <SidebarIcon icon={link.icon} />
+                      <span>{link.name}</span>
+                    </Link>
+                  );
+                }
               })}
             </div>
           ))}
