@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import { LogoutButton } from './logout-button';
 
 const ACCESS_LEVELS_ALL = [
   'admin',
@@ -188,7 +189,7 @@ export const Sidebar = async () => {
                       key={link.name}
                     >
                       <SidebarIcon icon={link.icon} />
-                      <span>{link.name}</span>
+                      <span className='hidden lg:block'>{link.name}</span>
                     </Link>
                   );
                 }
@@ -197,6 +198,8 @@ export const Sidebar = async () => {
           ))}
         </div>
       </div>
+
+      <LogoutButton />
     </div>
   );
 };
