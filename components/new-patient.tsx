@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form';
 import { PatientFormSchema } from '@/lib/schema';
 import z from 'zod';
 import { CustomInput } from './custom-input';
+import { GENDER } from '@/lib';
 
 interface DataProps {
   data?: Patient;
@@ -38,7 +39,7 @@ export const NewPatient = ({ data, type }: DataProps) => {
 
   type PatientFormType = z.infer<typeof PatientFormSchema>;
   const form = useForm<PatientFormType>({
-    resolver: zodResolver(PatientFormSchema) as any,
+    resolver: zodResolver(PatientFormSchema) as any, // dev mode
     defaultValues: {
       ...userData,
     },
@@ -73,6 +74,32 @@ export const NewPatient = ({ data, type }: DataProps) => {
                   name='last_name'
                   placeholder='Last Name'
                   label='Last Name'
+                />
+              </div>
+              <CustomInput
+                type='input'
+                control={form.control}
+                name='email'
+                placeholder='eric@example.com'
+                label='Email Address'
+              />
+
+              <div className='flex flex-col lg:flex-row gap-y-6 items-center gap-2 md:gap-x-4'>
+                <CustomInput
+                  type='select'
+                  control={form.control}
+                  name='gender'
+                  placeholder='select gender'
+                  label='Gender'
+                  selectList={GENDER}
+                />
+                <CustomInput
+                  type='input'
+                  control={form.control}
+                  name='date_of_birth'
+                  placeholder='02-01-2000'
+                  label='Date of Birth'
+                  inputType='date'
                 />
               </div>
             </>

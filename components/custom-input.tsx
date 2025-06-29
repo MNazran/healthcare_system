@@ -8,6 +8,13 @@ import {
   FormMessage,
 } from './ui/form';
 import { Input } from './ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
 
 interface InputProps {
   type: 'input' | 'select' | 'checkbox' | 'switch' | 'radio' | 'textarea';
@@ -31,6 +38,24 @@ const RenderInput = ({ field, props }: { field: any; props: InputProps }) => {
             {...field}
           />
         </FormControl>
+      );
+
+    case 'select':
+      return (
+        <Select onValueChange={field.onChange} value={field?.value}>
+          <FormControl>
+            <SelectTrigger>
+              <SelectValue placeholder={props.placeholder} />
+            </SelectTrigger>
+          </FormControl>
+          <SelectContent>
+            {props.selectList?.map((i, id) => (
+              <SelectItem key={id} value={i.value}>
+                {i.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       );
   }
 };
