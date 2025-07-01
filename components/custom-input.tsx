@@ -76,6 +76,6 @@ export const CustomInput = (props: InputProps) => {
           <FormMessage />
         </FormItem>
       )}
-    ></FormField>
+    />
   );
 };

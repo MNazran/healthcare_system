@@ -7,7 +7,7 @@ export const MARITAL_STATUS = [
   { label: 'Single', value: 'single' },
   { label: 'Married', value: 'married' },
   { label: 'Divorced', value: 'divorced' },
-  { lable: 'Widowed', value: 'widowed' },
+  { label: 'Widowed', value: 'widowed' },
   { label: 'Separated', value: 'separated' },
 ];
 

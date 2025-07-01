@@ -17,7 +17,7 @@ import { useForm } from 'react-hook-form';
 import { PatientFormSchema } from '@/lib/schema';
 import z from 'zod';
 import { CustomInput } from './custom-input';
-import { GENDER } from '@/lib';
+import { GENDER, MARITAL_STATUS, RELATION } from '@/lib';
 
 interface DataProps {
   data?: Patient;
@@ -91,7 +91,7 @@ export const NewPatient = ({ data, type }: DataProps) => {
                   name='gender'
                   placeholder='select gender'
                   label='Gender'
-                  selectList={GENDER}
+                  selectList={GENDER!}
                 />
                 <CustomInput
                   type='input'
@@ -102,7 +102,108 @@ export const NewPatient = ({ data, type }: DataProps) => {
                   inputType='date'
                 />
               </div>
+
+              <div className=' flex flex-col lg:flex-row gap-y-6 items-center gap-2 md:gap-x-4'>
+                <CustomInput
+                  type='input'
+                  control={form.control}
+                  name='phone'
+                  placeholder='0125463748'
+                  label='Contact Number'
+                />
+                <CustomInput
+                  type='select'
+                  control={form.control}
+                  name='marital_status'
+                  placeholder='Select marital status'
+                  label='Marital Status'
+                  selectList={MARITAL_STATUS!}
+                />
+              </div>
+
+              <CustomInput
+                type='input'
+                control={form.control}
+                name='address'
+                placeholder='153 Street, Apt 1930-G, KL'
+                label='Address'
+              />
             </>
+
+            <div className='space-y-8'>
+              <h3 className='text-lg font-semibold'>Family Information</h3>
+              <CustomInput
+                type='input'
+                control={form.control}
+                name='emergency_contact_name'
+                placeholder='Adam'
+                label='Emergency contact name'
+              />
+              <CustomInput
+                type='input'
+                control={form.control}
+                name='emergency_contact_number'
+                placeholder='0168753965'
+                label='Emergency contact'
+              />
+              <CustomInput
+                type='select'
+                control={form.control}
+                name='relation'
+                placeholder='Select relation with contact person'
+                label='Relation'
+                selectList={RELATION}
+              />
+            </div>
+
+            <div className='space-y-8'>
+              <h3 className='text-lg font-semibold'>Medical Information</h3>
+
+              <CustomInput
+                type='input'
+                control={form.control}
+                name='blood_group'
+                placeholder='A+'
+                label='Blood group'
+              />
+              <CustomInput
+                type='input'
+                control={form.control}
+                name='allergies'
+                placeholder='Milk'
+                label='Allergies'
+              />
+              <CustomInput
+                type='input'
+                control={form.control}
+                name='medical_conditions'
+                placeholder='Medical conditions'
+                label='Medical conditions'
+              />
+              <CustomInput
+                type='input'
+                control={form.control}
+                name='medical_history'
+                placeholder='Medical history'
+                label='Medical history'
+              />
+              <div className='flex flex-col lg:flex-row  gap-y-6 items-center gap-2 md:gap-4'>
+                <CustomInput
+                  type='input'
+                  control={form.control}
+                  name='insurance_provider'
+                  placeholder='Insurance provider'
+                  label='Insurance provider'
+                />{' '}
+                <CustomInput
+                  type='input'
+                  control={form.control}
+                  name='insurance_number'
+                  placeholder='Insurance number'
+                  label='Insurance number'
+                />
+              </div>
+            </div>
           </form>
         </Form>
       </CardContent>
