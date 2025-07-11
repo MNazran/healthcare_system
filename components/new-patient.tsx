@@ -13,11 +13,12 @@ import {
 import { useRouter } from 'next/navigation';
 import { Form } from './ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { PatientFormSchema } from '@/lib/schema';
 import z from 'zod';
 import { CustomInput } from './custom-input';
 import { GENDER, MARITAL_STATUS, RELATION } from '@/lib';
+import { Button } from './ui/button';
 
 interface DataProps {
   data?: Patient;
@@ -45,6 +46,12 @@ export const NewPatient = ({ data, type }: DataProps) => {
     },
   });
 
+  const onSubmit: SubmitHandler<z.infer<typeof PatientFormSchema>> = async (
+    values
+  ) => {
+    console.log(values);
+  };
+
   return (
     <Card className='max-w-6xl w-full p-4'>
       <CardHeader>
@@ -57,7 +64,10 @@ export const NewPatient = ({ data, type }: DataProps) => {
 
       <CardContent>
         <Form {...form}>
-          <form onSubmit={() => {}} className='space-y-8 mt-5'>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className='space-y-8 mt-5'
+          >
             <h3 className='text-lg font-semibold'>Personal Information</h3>
             <>
               <div className='flex flex-col lg:flex-row gap-y-6 items-center gap-2 md:gap-x-4'>
@@ -250,6 +260,14 @@ export const NewPatient = ({ data, type }: DataProps) => {
                 </div>
               </div>
             )}
+
+            <Button
+              disabled={loading}
+              type='submit'
+              className='w-full md:w-fit px-6'
+            >
+              {type === 'create' ? 'Submit' : 'Update'}
+            </Button>
           </form>
         </Form>
       </CardContent>
