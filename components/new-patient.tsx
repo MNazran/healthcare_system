@@ -2,7 +2,7 @@
 
 import { Patient } from '@/lib/generated/prisma';
 import { useUser } from '@clerk/nextjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -43,6 +43,11 @@ export const NewPatient = ({ data, type }: DataProps) => {
     resolver: zodResolver(PatientFormSchema) as any, // dev mode
     defaultValues: {
       ...userData,
+      address: '',
+      date_of_birth: new Date(),
+      gender: 'MALE',
+      marital_status: 'single',
+      emergency_contact_name: '',
     },
   });
 
@@ -51,6 +56,24 @@ export const NewPatient = ({ data, type }: DataProps) => {
   ) => {
     console.log(values);
   };
+
+  useEffect(() => {
+    if (type === 'create') {
+      userData && form.reset({ ...userData });
+    } else if (type === 'update') {
+      data &&
+        form.reset({
+          first_name: data.first_name,
+          last_name: data.last_name,
+          email: data.email,
+          phone: data.phone,
+          date_of_birth: new Date(data.date_of_birth),
+          gender: data.gender,
+          address: data.address,
+          emergency_contact_name: data.emergencty_contact_name,
+        });
+    }
+  }, [user]);
 
   return (
     <Card className='max-w-6xl w-full p-4'>
