@@ -48,6 +48,14 @@ export const NewPatient = ({ data, type }: DataProps) => {
       gender: 'MALE',
       marital_status: 'single',
       emergency_contact_name: '',
+      emergency_contact_number: '',
+      relation: 'mother',
+      blood_group: '',
+      allergies: '',
+      medical_conditions: '',
+      insurance_number: '',
+      insurance_provider: '',
+      medical_history: '',
     },
   });
 
@@ -69,8 +77,30 @@ export const NewPatient = ({ data, type }: DataProps) => {
           phone: data.phone,
           date_of_birth: new Date(data.date_of_birth),
           gender: data.gender,
+          marital_status: data.marital_status as
+            | 'married'
+            | 'single'
+            | 'divorced'
+            | 'widowed'
+            | 'separated',
           address: data.address,
           emergency_contact_name: data.emergencty_contact_name,
+          emergency_contact_number: data.emergency_contact_number,
+          relation: data.relation as
+            | 'mother'
+            | 'father'
+            | 'husband'
+            | 'wife'
+            | 'others',
+          blood_group: data?.blood_group!,
+          allergies: data.allergies! || '',
+          medical_conditions: data?.medical_conditions! || '',
+          medical_history: data?.medical_history! || '',
+          insurance_number: data.insurance_number! || '',
+          insurance_provider: data.insurance_provider! || '',
+          medical_consent: data.medical_consent,
+          privacy_consent: data.privacy_consent,
+          service_consent: data.service_consent,
         });
     }
   }, [user]);
