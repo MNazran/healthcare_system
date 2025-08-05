@@ -19,6 +19,8 @@ import z from 'zod';
 import { CustomInput } from './custom-input';
 import { GENDER, MARITAL_STATUS, RELATION } from '@/lib';
 import { Button } from './ui/button';
+import { createNewPatient } from '@/app/actions/patient';
+import { toast } from 'sonner';
 
 interface DataProps {
   data?: Patient;
@@ -39,6 +41,7 @@ export const NewPatient = ({ data, type }: DataProps) => {
   };
 
   type PatientFormType = z.infer<typeof PatientFormSchema>;
+
   const form = useForm<PatientFormType>({
     resolver: zodResolver(PatientFormSchema) as any, // dev mode
     defaultValues: {
@@ -59,10 +62,26 @@ export const NewPatient = ({ data, type }: DataProps) => {
     },
   });
 
+  const userId = user?.id;
+
   const onSubmit: SubmitHandler<z.infer<typeof PatientFormSchema>> = async (
     values
   ) => {
-    console.log(values);
+    setLoading(true);
+
+    const res =
+      type === 'create' ? await createNewPatient(values, userId!) : null;
+
+    setLoading(false);
+
+    if (res?.success) {
+      toast.success(res.msg);
+      form.reset();
+      router.push('/');
+    } else {
+      console.log(res);
+      toast.error('Failed to create patient');
+    }
   };
 
   useEffect(() => {
